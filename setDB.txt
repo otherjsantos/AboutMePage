@@ -1,0 +1,2 @@
+java -cp hsqldb.jar org.hsqldb.server.Server --database.0 file:am-page --dbname.0 am-page
+java -cp hsqldb.jar org.hsqldb.util.DatabaseManager
