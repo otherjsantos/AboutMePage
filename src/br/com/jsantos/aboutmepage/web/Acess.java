@@ -24,12 +24,14 @@ public class Acess extends HttpServlet{
 		String password = req.getParameter("password");
 		
 		try(Connection con = new ConnectionPool().getConnection()){
-			UsuariosDAO usuariosDao = new UsuariosDAO(con);
-			Usuario usuario = usuariosDao.busca(login, password);
+			System.out.println("Conexão criada com sucesso!");
+			UsuariosDAO usuarioDAO = new UsuariosDAO(con);
+			
+			Usuario usuario = usuarioDAO.busca(login, password);
+			
 			System.out.println(usuario);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }

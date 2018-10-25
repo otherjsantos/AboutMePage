@@ -14,7 +14,7 @@ public class ConnectionPool {
 	public ConnectionPool() {
 
 		JDBCPool pool = new JDBCPool();
-		pool.setUrl("jdbc:hsqldb:hsql://localhost/am-page");
+		pool.setUrl("jdbc:hsqldb:hsql://localhost/new-db");
 		pool.setUser("SA");
 		pool.setPassword("");
 		this.dataSource = pool;
