@@ -37,6 +37,6 @@ public class Usuario {
 	
 	@Override
 	public String toString() {
-		return "Usuário "+this.id+" - "+this.login+" adicionado!";
+		return "Usuário "+this.id+" - "+this.login;
 	}
 }

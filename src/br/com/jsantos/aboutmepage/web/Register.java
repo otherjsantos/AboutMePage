@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,14 +24,23 @@ public class Register extends HttpServlet {
 		try (Connection connection = new ConnectionPool().getConnection()) {
 
 			String nome = req.getParameter("nome");
-			String sobrenome = req.getParameter("sobrename");
+			String sobrenome = req.getParameter("sobrenome");
 			String login = req.getParameter("login");
 			String password = req.getParameter("password");
 			Usuario usuario = new Usuario(nome, sobrenome, login, password);
 
 			UsuariosDAO usuarioDAO = new UsuariosDAO(connection);
-
-			usuarioDAO.cadastrar(usuario);
+			
+			req.setAttribute("usuario", usuario);
+			
+			if(usuarioDAO.cadastrar(usuario)) {
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/registerComSucesso.jsp");
+				dispatcher.forward(req, resp);
+			}
+			else {
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/registerComErro.jsp");
+				dispatcher.forward(req, resp);
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();

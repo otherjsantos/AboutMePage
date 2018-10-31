@@ -16,10 +16,12 @@ public class UsuariosDAO {
 		this.con = con;
 	}
 
-	public void cadastrar(Usuario usuario) throws SQLException {
+	public Boolean cadastrar(Usuario usuario) throws SQLException {
 
 		String sql = "INSERT INTO usuario(nome, sobrenome, login, password) values(?, ?, ?, ?)";
 
+		Boolean isCadastrado = false;
+		
 		try (PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			statement.setString(1, usuario.getNome());
 			statement.setString(2, usuario.getSobrenome());
@@ -28,12 +30,12 @@ public class UsuariosDAO {
 			statement.execute();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys()) {
-				if (resultSet.next()) {
+				isCadastrado = resultSet.next();
+				if (isCadastrado) {
 					usuario.setId(resultSet.getInt("id"));
 				}
 			}
-
-			System.out.println(usuario);
 		}
+		return isCadastrado;
 	}
 }
