@@ -3,6 +3,7 @@ package br.com.jsantos.aboutmepage.web;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,6 +31,12 @@ public class Register extends HttpServlet {
 			Usuario usuario = new Usuario(nome, sobrenome, login, password);
 
 			UsuariosDAO usuarioDAO = new UsuariosDAO(connection);
+			
+			List<Usuario> usuarios = usuarioDAO.listar();
+			
+			for(Usuario usuarioLista : usuarios) {
+				System.out.println(usuarioLista);
+			}
 			
 			req.setAttribute("usuario", usuario);
 			

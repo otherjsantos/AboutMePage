@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.jsantos.aboutmepage.model.Usuario;
 
@@ -37,5 +39,32 @@ public class UsuariosDAO {
 			}
 		}
 		return isCadastrado;
+	}
+	
+	public List<Usuario> listar() throws SQLException{
+		
+		String sql = "SELECT * FROM usuario";
+		List<Usuario> usuarios = new ArrayList<>();
+		
+		try(PreparedStatement statement = con.prepareStatement(sql)){
+
+			statement.execute();
+			
+			try(ResultSet rs = statement.getResultSet()){
+			
+				while(rs.next()) {
+					int id = rs.getInt("id");
+					String nome = rs.getString("nome");
+					String sobrenome = rs.getString("sobrenome");
+					String login = rs.getString("login");
+					String password = rs.getString("password");					
+					Usuario usuario = new Usuario(nome, sobrenome, login, password);
+					usuario.setId(id);
+					
+					usuarios.add(usuario);
+				}
+			}
+		}
+		return usuarios;
 	}
 }
