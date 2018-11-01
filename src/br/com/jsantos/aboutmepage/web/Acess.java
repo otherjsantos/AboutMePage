@@ -27,9 +27,6 @@ public class Acess extends HttpServlet{
 			System.out.println("Conexão criada com sucesso!");
 			UsuariosDAO usuarioDAO = new UsuariosDAO(con);
 			
-			Usuario usuario = usuarioDAO.busca(login, password);
-			
-			System.out.println(usuario);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
