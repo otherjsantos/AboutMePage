@@ -31,20 +31,15 @@ public class Register extends HttpServlet {
 			Usuario usuario = new Usuario(nome, sobrenome, login, password);
 
 			UsuariosDAO usuarioDAO = new UsuariosDAO(connection);
-			
-			List<Usuario> usuarios = usuarioDAO.listar();
-			
-			for(Usuario usuarioLista : usuarios) {
-				System.out.println(usuarioLista);
-			}
-			
+
+			System.out.println(usuarioDAO.buscar("jsantos"));
+
 			req.setAttribute("usuario", usuario);
-			
-			if(usuarioDAO.cadastrar(usuario)) {
+
+			if (usuarioDAO.cadastrar(usuario)) {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/registerComSucesso.jsp");
 				dispatcher.forward(req, resp);
-			}
-			else {
+			} else {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/registerComErro.jsp");
 				dispatcher.forward(req, resp);
 			}
