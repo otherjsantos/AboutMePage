@@ -53,6 +53,10 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuário " + this.id + " - " + this.login;
+		return "ID: "+this.id+
+				" \nNOME:"+this.nome+
+				" \nSOBRENOME:"+this.sobrenome+
+				" \nLOGIN:"+this.login+
+				" \nPASSWORD:"+this.password;
 	}
 }

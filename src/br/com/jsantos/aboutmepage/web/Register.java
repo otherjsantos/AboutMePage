@@ -32,8 +32,6 @@ public class Register extends HttpServlet {
 
 			UsuariosDAO usuarioDAO = new UsuariosDAO(connection);
 
-			System.out.println(usuarioDAO.buscar("jsantos"));
-
 			req.setAttribute("usuario", usuario);
 
 			if (usuarioDAO.cadastrar(usuario)) {

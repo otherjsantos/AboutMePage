@@ -4,6 +4,6 @@
 	</head>
 	<body>
 		<h1>Parabéns, Seu usuário foi criado com sucesso!</h1>
-		<p>Login: ${usuario.getNome()}</p>
+		<p>Login: ${usuario.getLogin()}</p>
 	</body>
 </html>

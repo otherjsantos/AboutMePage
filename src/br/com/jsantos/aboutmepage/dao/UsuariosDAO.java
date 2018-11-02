@@ -20,25 +20,36 @@ public class UsuariosDAO {
 
 	public Boolean cadastrar(Usuario usuario) throws SQLException {
 
-		String sql = "INSERT INTO usuario(nome, sobrenome, login, password) values(?, ?, ?, ?)";
+		Boolean isSucess = !(isCadastrado(usuario.getLogin()));
 
-		Boolean isCadastrado = false;
+		if (isSucess) {
+			String sql = "INSERT INTO usuario(nome, sobrenome, login, password) values(?, ?, ?, ?)";
 
-		try (PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-			statement.setString(1, usuario.getNome());
-			statement.setString(2, usuario.getSobrenome());
-			statement.setString(3, usuario.getLogin());
-			statement.setString(4, usuario.getPassword());
-			statement.execute();
+			try (PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+				statement.setString(1, usuario.getNome());
+				statement.setString(2, usuario.getSobrenome());
+				statement.setString(3, usuario.getLogin());
+				statement.setString(4, usuario.getPassword());
+				statement.execute();
 
-			try (ResultSet resultSet = statement.getGeneratedKeys()) {
-				isCadastrado = resultSet.next();
-				if (isCadastrado) {
-					usuario.setId(resultSet.getInt("id"));
+				try (ResultSet resultSet = statement.getGeneratedKeys()) {
+					isSucess = resultSet.next();
+					if (isSucess) {
+						usuario.setId(resultSet.getInt("id"));
+					}
 				}
 			}
 		}
-		return isCadastrado;
+		return isSucess;
+	}
+
+	public Boolean isCadastrado(String login) throws SQLException {
+
+		if (buscar(login) != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public Usuario buscar(String usuarioLogin) throws SQLException {
@@ -50,7 +61,7 @@ public class UsuariosDAO {
 			statement.execute();
 
 			try (ResultSet rs = statement.getResultSet()) {
-				while(rs.next()) {
+				while (rs.next()) {
 					int id = rs.getInt("id");
 					String nome = rs.getString("nome");
 					String sobrenome = rs.getString("sobrenome");
@@ -58,7 +69,7 @@ public class UsuariosDAO {
 					String password = rs.getString("password");
 					Usuario usuario = new Usuario(nome, sobrenome, login, password);
 					usuario.setId(id);
-					
+
 					return usuario;
 				}
 			}
