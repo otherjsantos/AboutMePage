@@ -7,11 +7,31 @@ public class Usuario {
 	private String sobrenome;
 	private String login;
 	private String password;
-	
+
 	public Usuario(String nome, String sobrenome, String login, String password) {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.login = login;
+		this.password = password;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -31,12 +51,8 @@ public class Usuario {
 		return password;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
 	@Override
 	public String toString() {
-		return "Usuário "+this.id+" - "+this.login;
+		return "Usuário " + this.id + " - " + this.login;
 	}
 }
