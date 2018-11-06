@@ -77,6 +77,17 @@ public class UsuariosDAO {
 		return null;
 	}
 
+	public Usuario validar(String login, String password) throws SQLException {
+		Usuario usuario = buscar(login);
+
+		if (usuario != null)
+			if (usuario.getPassword().equals(password)) {
+				return usuario;
+			}
+		
+		return null;
+	}
+
 	public List<Usuario> listar() throws SQLException {
 
 		String sql = "SELECT * FROM usuario";
