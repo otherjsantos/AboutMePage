@@ -1,7 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Biografia - Jo√£o da Silva</title>
+		<title>Biografia - Jo„o da Silva</title>
 		<meta charset="utf-8">
 		<link rel="icon" href="img/favicon.png">
 		<link rel="stylesheet" href="css/reset.css">
@@ -15,7 +16,7 @@
 			<h1 class="titulo-principal">Sobre mim</h1>
 
 			<div class="container">
-				<p>Moro em S√£o Paulo mas atendo clientes do mundo todo. Sou conhecido por fazer produtos de <em>qualidade</em>, <em>durabilidade</em> e que <em>agregam valor</em> para meus clientes.</p>
+				<p>Moro em S„o Paulo mas atendo clientes do mundo todo. Sou conhecido por fazer produtos de <em>qualidade</em>, <em>durabilidade</em> e que <em>agregam valor</em> para meus clientes.</p>
 
 				<p>Trabalho usando a web como plataforma, ou seja, respiro HTML5, CSS3 e JavaScript (ou melhor: ECMASCript). Crio sites para todos, seguindo as principais diretivas de acessibilidade, responsividade e web sem√¢ntica, sem descuidar da qualidade de c√≥digo.</p>
 
@@ -77,11 +78,19 @@
 					</a>
 				</li>
 			</ul>
-			<form action="acess" method="post">
-				Usu√°rio:<input type="text" name="login"><br />
-				Password:<input type="password" name="password"><br />
-				<input type="submit" value="Entrar"><br />
-			</form>
+			
+			<c:choose>
+				<c:when test="${not empty usuario}">
+					<p>${usuario.getLogin()}</p>
+				</c:when>
+				<c:when test="${usuario == null}">
+					<c:import url="/WEB-INF/paginas/FormLogin.html" />
+					<p>Usu·rio invalido...</p>
+				</c:when>
+				<c:otherwise>
+					<c:import url="/WEB-INF/paginas/FormLogin.html" />
+				</c:otherwise>
+			</c:choose>
 			
 			<a href="register.html"> <input type="button" value="Register"/> </a>
 		</aside>

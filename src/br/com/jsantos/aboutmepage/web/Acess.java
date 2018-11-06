@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,8 +29,15 @@ public class Acess extends HttpServlet {
 			UsuariosDAO usuarioDAO = new UsuariosDAO(con);
 			Usuario usuario = usuarioDAO.validar(login, password);
 			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
+			req.setAttribute("usuario", usuario);
+			dispatcher.forward(req, resp);
+			
+			/*
 			if(usuario != null) {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/AcessSucess.jsp");
+				//Cookie cookie = new Cookie("usuario.logado", usuario.getLogin());
+				//resp.addCookie(cookie);
 				req.setAttribute("usuario", usuario);
 				dispatcher.forward(req, resp);
 			}
@@ -37,6 +45,7 @@ public class Acess extends HttpServlet {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/AcessNoSucess.jsp");
 				dispatcher.forward(req, resp);
 			}
+			*/
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
