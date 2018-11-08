@@ -29,16 +29,23 @@ public class Acess extends HttpServlet {
 			UsuariosDAO usuarioDAO = new UsuariosDAO(con);
 			Usuario usuario = usuarioDAO.validar(login, password);
 			
-			if(usuario != null) {
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/index.jsp");
-				Cookie cookie = new Cookie("usuario.logado", usuario.getLogin());
-				resp.addCookie(cookie);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
+			req.setAttribute("usuario", usuario);
+			dispatcher.forward(req, resp);
+			
+			/*
+			if(usuario != null) 
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/AcessSucess.jsp");
+				//Cookie cookie = new Cookie("usuario.logado", usuario.getLogin());
+				//resp.addCookie(cookie);
+				req.setAttribute("usuario", usuario);
 				dispatcher.forward(req, resp);
 			}
 			else {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/AcessNoSucess.jsp");
 				dispatcher.forward(req, resp);
 			}
+			*/
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
