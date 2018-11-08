@@ -82,11 +82,13 @@
 			
 			<c:choose>
 				<c:when test="${not empty usuario}">
-					<p>${usuario.getLogin()}</p>
-				</c:when>
-				<c:when test="${usuario == null}">
-					<c:import url="/WEB-INF/paginas/FormLogin.html" />
-					<p>Usuário invalido...</p>
+					<c:if test="${usuario != null}">
+						<p>${usuario.getLogin()}</p>
+					</c:if>
+					<c:if test="${usuario == null}">
+						<c:import url="/WEB-INF/paginas/FormLogin.html" />
+						<p>Usuário invalido...</p>
+					</c:if>
 				</c:when>
 				<c:otherwise>
 					<c:import url="/WEB-INF/paginas/FormLogin.html" />
