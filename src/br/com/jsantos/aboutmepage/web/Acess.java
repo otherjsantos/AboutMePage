@@ -11,6 +11,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.com.jsantos.aboutmepage.dao.ConnectionPool;
 import br.com.jsantos.aboutmepage.dao.UsuariosDAO;
@@ -29,8 +30,10 @@ public class Acess extends HttpServlet {
 			UsuariosDAO usuarioDAO = new UsuariosDAO(con);
 			Usuario usuario = usuarioDAO.validar(login, password);
 			
+			HttpSession session = req.getSession();
+			session.setAttribute("usuarioLogado", usuario);
+			session.setAttribute("triedAcess", true);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-			req.setAttribute("usuario", usuario);
 			dispatcher.forward(req, resp);
 			
 			/*

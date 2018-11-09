@@ -50,16 +50,12 @@
 		</main>
 		<img src="img/eu.jpg" alt="Foto de Jo√£o da Silva" class="minha-foto">
 		<aside class="navegacao-site">
-			<h1>Jo√£o da Silva</h1>
+			<h1>Jo„o da Silva</h1>
 			<nav>
 				<ul>
-					<li><a href="index.html">Home</a></li>
-					<form action="portfolio">
-						<li><a href="portfolio.html">Portfolio</a></li>
-					</form>
-					<li><a href="bio.html">Sobre mim</a></li>
+					<li><a href="index.jsp">Home</a></li>
+					<li><a href="portfolio.html">Portfolio</a></li>
 					<li><a href="blog.html">Blog</a></li>
-					<li><a href="contato.html">Contato</a></li>
 				</ul>
 			</nav>
 			<ul class="icones-redes-sociais">
@@ -81,21 +77,26 @@
 			</ul>
 			
 			<c:choose>
-				<c:when test="${not empty usuario}">
-					<c:if test="${usuario != null}">
-						<p>${usuario.getLogin()}</p>
-					</c:if>
-					<c:if test="${usuario == null}">
-						<c:import url="/WEB-INF/paginas/FormLogin.html" />
-						<p>Usu·rio invalido...</p>
-					</c:if>
+				<c:when test="${triedAcess != true}">
+					<c:import url="/WEB-INF/paginas/FormLogin.html"/>
+					<a href="register.html"> <input type="button" value="Register"/> </a>
 				</c:when>
 				<c:otherwise>
-					<c:import url="/WEB-INF/paginas/FormLogin.html" />
+					<c:if test="${usuarioLogado != null}">
+						<p>${usuarioLogado.getLogin()}</p>
+						<form action="logout" method="post">
+							<input type="submit" value="Logout"/>
+						</form>
+					</c:if>
+					<c:if test="${usuarioLogado == null}">
+						<c:import url="/WEB-INF/paginas/FormLogin.html"/>
+						<a href="register.html"> <input type="button" value="Register"/> </a>
+						<p>Usu·rio invalido!</p>
+						<%session.invalidate();%>				
+					</c:if>
 				</c:otherwise>
 			</c:choose>
 			
-			<a href="register.html"> <input type="button" value="Register"/> </a>
 		</aside>
 		<footer class="rodape-pagina">
 			&copy; Jo√£o da Silva 2014

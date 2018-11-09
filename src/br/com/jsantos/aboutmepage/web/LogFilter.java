@@ -11,6 +11,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import br.com.jsantos.aboutmepage.model.Usuario;
+
+@WebFilter(urlPatterns="/*")
 public class LogFilter implements Filter{
 
 	@Override
@@ -22,7 +25,14 @@ public class LogFilter implements Filter{
 			throws IOException, ServletException {
 		
 		HttpServletRequest req = (HttpServletRequest) request;
-		System.out.println("Usuario acessando a URI: " + req.getRequestURI());
+		String usuarioLogin = "Usuário deslogado";
+		
+		Usuario usuario = (Usuario) req.getSession().getAttribute("usuarioLogado");
+		if(usuario != null)
+			usuarioLogin = usuario.getLogin();
+		
+		System.out.println(usuarioLogin+" acessando a URI: " + req.getRequestURI());
+		
 		chain.doFilter(request, response);
 	}
 
