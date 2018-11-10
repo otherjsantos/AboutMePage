@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<% %>
 <html>
 	<head>
 		<title>Biografia - João da Silva</title>
@@ -86,6 +85,9 @@
 						<p>${usuarioLogado.getLogin()}</p>
 						<form action="logout" method="post">
 							<input type="submit" value="Logout"/>
+						</form>
+						<form action="perfil" method="post">
+							<input type="submit" value="Perfil"/>
 						</form>
 					</c:if>
 					<c:if test="${usuarioLogado == null}">

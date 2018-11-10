@@ -114,4 +114,19 @@ public class UsuariosDAO {
 		}
 		return usuarios;
 	}
+	
+	public Usuario alterar(String login, Usuario novoUsuario) throws SQLException {
+		
+		String sql = "UPDATE usuario SET nome=?, sobrenome=?, password=? WHERE login=?";
+		boolean resultado = false;
+		
+		try(PreparedStatement statement = con.prepareStatement(sql)){
+			statement.setString(1, novoUsuario.getNome());
+			statement.setString(2, novoUsuario.getSobrenome());
+			statement.setString(3, novoUsuario.getPassword());
+			statement.setString(4, login);
+			resultado = statement.execute();
+		}
+		return buscar(login);
+	}
 }
