@@ -78,7 +78,7 @@
 			<c:choose>
 				<c:when test="${triedAcess != true}">
 					<c:import url="/WEB-INF/paginas/FormLogin.html"/>
-					<a href="register.html"> <input type="button" value="Register"/> </a>
+					<a href="register.jsp"><input type="button" value="Register" /></a>
 				</c:when>
 				<c:otherwise>
 					<c:if test="${usuarioLogado != null}">
@@ -92,7 +92,7 @@
 					</c:if>
 					<c:if test="${usuarioLogado == null}">
 						<c:import url="/WEB-INF/paginas/FormLogin.html"/>
-						<a href="register.html"> <input type="button" value="Register"/> </a>
+						<a href="register.jsp"><input type="button" value="Register" /></a>
 						<p>Usuário invalido!</p>
 						<%session.invalidate();%>				
 					</c:if>

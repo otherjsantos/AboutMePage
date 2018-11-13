@@ -16,34 +16,38 @@ import br.com.jsantos.aboutmepage.dao.ConnectionPool;
 import br.com.jsantos.aboutmepage.dao.UsuariosDAO;
 import br.com.jsantos.aboutmepage.model.Usuario;
 
-@WebServlet(urlPatterns="/alterar")
-public class Alterar extends HttpServlet{
+@WebServlet(urlPatterns = "/alterar")
+public class Alterar extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		
-		try(Connection c = new ConnectionPool().getConnection()){
-			
-			UsuariosDAO usuarioDAO = new UsuariosDAO(c);
-			HttpSession session = req.getSession();
-			Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
-			
-			String nome = req.getParameter("nome");
-			String sobrenome = req.getParameter("sobrenome");
-			String login = req.getParameter("login");
-			String password = req.getParameter("password");
-			Usuario novoUsuario = new Usuario(nome, sobrenome, login, password);
-			
-			Usuario usuarioLogado = usuarioDAO.alterar(usuario.getLogin(), novoUsuario);
-			session.setAttribute("usuarioLogado", usuarioLogado);
-			session.setAttribute("editON", false);
-			
-			RequestDispatcher dispatcher = req.getRequestDispatcher("register.jsp");
-			dispatcher.forward(req, resp);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} 
-		
+		HttpSession session = req.getSession();
+		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+
+		if (usuario.getPassword().equals(req.getParameter("passwordAtual"))) {
+			try (Connection c = new ConnectionPool().getConnection()) {
+
+				UsuariosDAO usuarioDAO = new UsuariosDAO(c);
+
+				String nome = req.getParameter("nome");
+				String sobrenome = req.getParameter("sobrenome");
+				String login = req.getParameter("login");
+				String password = req.getParameter("password");
+				Usuario novoUsuario = new Usuario(nome, sobrenome, login, password);
+
+				Usuario usuarioLogado = usuarioDAO.alterar(usuario.getLogin(), novoUsuario);
+				session.setAttribute("editON", false);
+				session.setAttribute("usuarioLogado", usuarioLogado);
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			session.setAttribute("editON", true);
+			session.setAttribute("validacaoFalha", true);
+		}
+		RequestDispatcher dispatcher = req.getRequestDispatcher("register.jsp");
+		dispatcher.forward(req, resp);
 	}
 }

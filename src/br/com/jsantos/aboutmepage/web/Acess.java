@@ -33,22 +33,10 @@ public class Acess extends HttpServlet {
 			HttpSession session = req.getSession();
 			session.setAttribute("usuarioLogado", usuario);
 			session.setAttribute("triedAcess", true);
+			session.setMaxInactiveInterval(5*60);
+			
 			RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
 			dispatcher.forward(req, resp);
-			
-			/*
-			if(usuario != null) 
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/AcessSucess.jsp");
-				//Cookie cookie = new Cookie("usuario.logado", usuario.getLogin());
-				//resp.addCookie(cookie);
-				req.setAttribute("usuario", usuario);
-				dispatcher.forward(req, resp);
-			}
-			else {
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/AcessNoSucess.jsp");
-				dispatcher.forward(req, resp);
-			}
-			*/
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
